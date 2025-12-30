@@ -103,8 +103,7 @@ export default function Home() {
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       <Canvas camera={{ position: [doorXs[0], 1.6, 5.2], fov: 50 }}>
         <Scene index={index} doorXs={doorXs} />
-      </Canvas>
-
+        
       <EffectComposer multisampling={0}>
   {/* Liminal / soft look */}
   <ToneMapping />
@@ -112,6 +111,7 @@ export default function Home() {
   <Vignette eskil={false} offset={0.2} darkness={0.9} />
   <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.08} />
 </EffectComposer>
+      </Canvas>
 
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         <button
