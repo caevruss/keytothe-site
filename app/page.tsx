@@ -3,6 +3,8 @@
 import { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { EffectComposer, Bloom, Vignette, Noise, ToneMapping } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 
 function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -102,6 +104,14 @@ export default function Home() {
       <Canvas camera={{ position: [doorXs[0], 1.6, 5.2], fov: 50 }}>
         <Scene index={index} doorXs={doorXs} />
       </Canvas>
+
+      <EffectComposer multisampling={0}>
+  {/* Liminal / soft look */}
+  <ToneMapping />
+  <Bloom intensity={0.35} luminanceThreshold={0.75} luminanceSmoothing={0.2} />
+  <Vignette eskil={false} offset={0.2} darkness={0.9} />
+  <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.08} />
+</EffectComposer>
 
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         <button
