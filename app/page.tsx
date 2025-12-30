@@ -65,7 +65,11 @@ function Scene({
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[4, 0, 0]}>
         <planeGeometry args={[60, 60]} />
-        <meshStandardMaterial color="#ffffff" />
+        <meshStandardMaterial
+  color={i === index ? "#ffffff" : "#f1f1f1"}
+  emissive={i === index ? "#ffffff" : "#000000"}
+  emissiveIntensity={i === index ? 2.5 : 0}
+/>
       </mesh>
 
 
