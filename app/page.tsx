@@ -73,7 +73,7 @@ function Scene({ index, doorXs }: { index: number; doorXs: number[] }) {
               <meshStandardMaterial
                 color={selected ? "#ffffff" : "#f1f1f1"}
                 emissive={selected ? "#ffffff" : "#000000"}
-                emissiveIntensity={selected ? 6 : 0}
+                emissiveIntensity={selected ? 0.8 : 0}
               />
             </mesh>
 
@@ -105,10 +105,10 @@ export default function Home() {
 
         {/* Postprocess (gözle görülür) */}
         <EffectComposer multisampling={0}>
-          <Bloom intensity={1.5} luminanceThreshold={0.0} luminanceSmoothing={0.0} />
-          <Vignette eskil={false} offset={0.15} darkness={1.4} />
-          <Noise opacity={0.25} />
-        </EffectComposer>
+  <Bloom intensity={0.25} luminanceThreshold={0.85} luminanceSmoothing={0.2} />
+  <Vignette eskil={false} offset={0.25} darkness={0.55} />
+  <Noise opacity={0.05} />
+</EffectComposer>
       </Canvas>
 
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
