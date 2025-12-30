@@ -101,17 +101,20 @@ export default function Home() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
-      <Canvas camera={{ position: [doorXs[0], 1.6, 5.2], fov: 50 }}>
-        <Scene index={index} doorXs={doorXs} />
-        
-      <EffectComposer multisampling={0}>
-  {/* Liminal / soft look */}
-  <ToneMapping />
-  <Bloom intensity={0.35} luminanceThreshold={0.75} luminanceSmoothing={0.2} />
-  <Vignette eskil={false} offset={0.2} darkness={0.9} />
-  <Noise premultiply blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.08} />
-</EffectComposer>
-      </Canvas>
+      <Canvas
+  camera={{ position: [doorXs[0], 1.6, 5.2], fov: 50 }}
+  gl={{ antialias: true }}
+>
+  <color attach="background" args={["#f8f8f8"]} />
+  <Scene index={index} doorXs={doorXs} />
+
+  <EffectComposer multisampling={0}>
+    <Bloom intensity={1.2} luminanceThreshold={0.0} luminanceSmoothing={0.0} />
+    <Vignette eskil={false} offset={0.15} darkness={1.4} />
+    <Noise opacity={0.25} />
+  </EffectComposer>
+</Canvas>
+
 
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         <button
