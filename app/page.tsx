@@ -74,12 +74,21 @@ function Scene({
         <group key={i} position={[x, 0, 0]}>
           <mesh position={[0, 1.1, 0]}>
             <boxGeometry args={[1.35, 2.35, 0.12]} />
-            <meshStandardMaterial color="#efefef" />
+            <meshStandardMaterial
+  color={i === index ? "#ffffff" : "#f1f1f1"}
+  emissive={i === index ? "#ffffff" : "#000000"}
+  emissiveIntensity={i === index ? 2.5 : 0}
+/>
+
           </mesh>
 
           <mesh position={[0, 1.1, 0.07]}>
             <boxGeometry args={[1.15, 2.1, 0.05]} />
-            <meshStandardMaterial color={i === index ? "#e6e6e6" : "#f1f1f1"} />
+            <meshStandardMaterial
+  color={i === index ? "#ffffff" : "#f1f1f1"}
+  emissive={i === index ? "#ffffff" : "#000000"}
+  emissiveIntensity={i === index ? 2.5 : 0}
+/>
           </mesh>
 
           <mesh position={[0, 2.45, 0.07]}>
