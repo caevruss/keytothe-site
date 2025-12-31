@@ -1,11 +1,10 @@
-// DEPLOY-TEST-123
-
 "use client";
 
 import { useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { EffectComposer, Bloom, Vignette, Noise } from "@react-three/postprocessing";
+import { EffectComposer, Bloom, Vignette, Noise, Scanline } from "@react-three/postprocessing";
+import { BlendFunction } from "postprocessing";
 
 function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -42,20 +41,19 @@ function Scene({ index, doorXs }: { index: number; doorXs: number[] }) {
       camera.position.set(toXRef.current, camY, camZ);
     }
 
-    // düz koridora bak: orbit hissi yok
     lookAt.set(camera.position.x, 1.2, 0);
     camera.lookAt(lookAt);
   });
 
   return (
     <>
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[5, 8, 5]} intensity={1.8} />
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[5, 8, 5]} intensity={0.8} />
 
       {/* Zemin */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[4, 0, 0]}>
         <planeGeometry args={[60, 60]} />
-        <meshStandardMaterial color="#ffffff" />
+        <meshStandardMaterial color="#000000ff" />
       </mesh>
 
       {/* Kapılar */}
@@ -101,16 +99,21 @@ export default function Home() {
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
       <Canvas camera={{ position: [doorXs[0], 1.6, 5.2], fov: 50 }} gl={{ antialias: true }}>
-        <color attach="background" args={["#f8f8f8"]} />
+        <color attach="background" args={["#000000ff"]} />
 
         <Scene index={index} doorXs={doorXs} />
 
-        {/* Postprocess (gözle görülür) */}
         <EffectComposer multisampling={0}>
-  <Bloom intensity={0.25} luminanceThreshold={0.85} luminanceSmoothing={0.2} />
-  <Vignette eskil={false} offset={0.25} darkness={0.55} />
-  <Noise opacity={0.05} />
-</EffectComposer>
+        <Bloom intensity={0.1} luminanceThreshold={0.85} luminanceSmoothing={0.6} />
+        <Vignette eskil offset={0.2} darkness={0.45} />
+        <Noise opacity={0.01} />
+        <Scanline
+          blendFunction={BlendFunction.LUMINOSITY}
+          opacity={0.05}
+          density={0.9}
+        />
+
+        </EffectComposer>
       </Canvas>
 
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
